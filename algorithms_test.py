@@ -1,6 +1,6 @@
 
 import unittest
-from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components, largest_component, shortest_path, graph
+from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components, largest_component, shortest_path, island_count, graph
 
 
 def graph_00():
@@ -271,6 +271,43 @@ def graph_17():
     ]
 
 
+def graph_18():
+    return [
+        ['W', 'L', 'W', 'W', 'W'],
+        ['W', 'L', 'W', 'W', 'W'],
+        ['W', 'W', 'W', 'L', 'W'],
+        ['W', 'W', 'L', 'L', 'W'],
+        ['L', 'W', 'W', 'L', 'L'],
+        ['L', 'L', 'W', 'W', 'W'],
+    ]
+
+
+def graph_19():
+    return [
+        ['L', 'W', 'W', 'L', 'W'],
+        ['L', 'W', 'W', 'L', 'L'],
+        ['W', 'L', 'W', 'L', 'W'],
+        ['W', 'W', 'W', 'W', 'W'],
+        ['W', 'W', 'L', 'L', 'L'],
+    ]
+
+
+def graph_20():
+    return [
+        ['L', 'L', 'L'],
+        ['L', 'L', 'L'],
+        ['L', 'L', 'L'],
+    ]
+
+
+def graph_21():
+    return [
+        ['W', 'W'],
+        ['W', 'W'],
+        ['W', 'W'],
+    ]
+
+
 class TestDepthFist(unittest.TestCase):
 
     def test_00_iterative(self):
@@ -515,6 +552,29 @@ class ShortestPath(unittest.TestCase):
         graph = graph_17()
         count = shortest_path.get(graph, 'm', 's')
         self.assertEqual(count, 6)
+
+
+class IslandCount(unittest.TestCase):
+
+    def test_00(self):
+        graph = graph_18()
+        count = island_count.get(graph)
+        self.assertEqual(count, 3)
+
+    def test_01(self):
+        graph = graph_19()
+        count = island_count.get(graph)
+        self.assertEqual(count, 4)
+
+    def test_02(self):
+        graph = graph_20()
+        count = island_count.get(graph)
+        self.assertEqual(count, 1)
+
+    def test_03(self):
+        graph = graph_21()
+        count = island_count.get(graph)
+        self.assertEqual(count, 0)
 
 
 if __name__ == "__main__":
