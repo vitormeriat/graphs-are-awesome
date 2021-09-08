@@ -1,6 +1,6 @@
 
 import unittest
-from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components_count, graph
+from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components, graph
 
 
 def graph_00():
@@ -186,6 +186,51 @@ def graph_09():
     }
 
 
+def graph_10():
+    # -> 1
+    return {
+        1: [2],
+        2: [1, 8],
+        6: [7],
+        9: [8],
+        7: [6, 8],
+        8: [9, 7, 2]
+    }
+
+
+def graph_11():
+    # -> 3
+    return {
+        3: [],
+        4: [6],
+        6: [4, 5, 7, 8],
+        8: [6],
+        7: [6],
+        5: [6],
+        1: [2],
+        2: [1]
+    }
+
+
+def graph_12():
+    # -> 0
+    return {}
+
+
+def graph_13():
+    # -> 5
+    return {
+        0: [4, 7],
+        1: [],
+        2: [],
+        3: [6],
+        4: [0],
+        6: [3],
+        7: [0],
+        8: []
+    }
+
+
 class TestDepthFist(unittest.TestCase):
 
     def test_00_iterative(self):
@@ -333,8 +378,28 @@ class UndirectedPath(unittest.TestCase):
 class ConnectedComponentsCount(unittest.TestCase):
     def test_00(self):
         graph = graph_09()
-        count = connected_components_count.connected_components_count(graph)
+        count = connected_components.count(graph)
         self.assertEqual(count, 2)
+
+    def test_01(self):
+        graph = graph_10()
+        count = connected_components.count(graph)
+        self.assertEqual(count, 1)
+
+    def test_02(self):
+        graph = graph_11()
+        count = connected_components.count(graph)
+        self.assertEqual(count, 3)
+
+    def test_03(self):
+        graph = graph_12()
+        count = connected_components.count(graph)
+        self.assertEqual(count, 0)
+
+    def test_04(self):
+        graph = graph_13()
+        count = connected_components.count(graph)
+        self.assertEqual(count, 5)
 
 
 if __name__ == "__main__":

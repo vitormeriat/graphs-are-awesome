@@ -10,7 +10,7 @@ Time: O(e)
 Space: O(n)
 """
 
-def connected_components_count(graph):
+def count(graph):
   visited = set()
   count = 0
   
