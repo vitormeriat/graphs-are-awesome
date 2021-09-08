@@ -7,10 +7,10 @@ An island is a vertically or horizontally connected region of land.
 
 depth first
 
-r = number of rows
-c = number of columns
-Time: O(rc)
-Space: O(rc)
+- r = number of rows
+- c = number of columns
+- Time: O(rc)
+- Space: O(rc)
 """
 
 

@@ -1,5 +1,5 @@
 """
-minimum island
+Minimum Island
 --
 Write a function, minimum_island, that takes in a grid containing Ws and Ls. W represents water and L represents land. 
 The function should return the size of the smallest island. 
@@ -7,14 +7,14 @@ An island is a vertically or horizontally connected region of land.
 
 You may assume that the grid contains at least one island.
 
-r = number of rows
-c = number of columns
-Time: O(rc)
-Space: O(rc)
+- r = number of rows
+- c = number of columns
+- Time: O(rc)
+- Space: O(rc)
 """
 
 
-def minimum_island(grid):
+def get(grid):
     visited = set()
     min_size = float("inf")
     for r in range(len(grid)):
