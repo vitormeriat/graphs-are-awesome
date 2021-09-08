@@ -1,6 +1,6 @@
 
 import unittest
-from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components, largest_component, graph
+from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components, largest_component, shortest_path, graph
 
 
 def graph_00():
@@ -187,7 +187,6 @@ def graph_09():
 
 
 def graph_10():
-    # -> 1
     return {
         1: [2],
         2: [1, 8],
@@ -199,7 +198,6 @@ def graph_10():
 
 
 def graph_11():
-    # -> 3
     return {
         3: [],
         4: [6],
@@ -213,12 +211,10 @@ def graph_11():
 
 
 def graph_12():
-    # -> 0
     return {}
 
 
 def graph_13():
-    # -> 5
     return {
         0: [4, 7],
         1: [],
@@ -229,6 +225,50 @@ def graph_13():
         7: [0],
         8: []
     }
+
+
+def graph_14():
+    return [
+        ['w', 'x'],
+        ['x', 'y'],
+        ['z', 'y'],
+        ['z', 'v'],
+        ['w', 'v']
+    ]
+
+
+def graph_15():
+    return [
+        ['a', 'c'],
+        ['a', 'b'],
+        ['c', 'b'],
+        ['c', 'd'],
+        ['b', 'd'],
+        ['e', 'd'],
+        ['g', 'f']
+    ]
+
+
+def graph_16():
+    return [
+        ['c', 'n'],
+        ['c', 'e'],
+        ['c', 's'],
+        ['c', 'w'],
+        ['w', 'e'],
+    ]
+
+
+def graph_17():
+    return [
+        ['m', 'n'],
+        ['n', 'o'],
+        ['o', 'p'],
+        ['p', 'q'],
+        ['t', 'o'],
+        ['r', 'q'],
+        ['r', 's']
+    ]
 
 
 class TestDepthFist(unittest.TestCase):
@@ -432,6 +472,49 @@ class LargestComponent(unittest.TestCase):
         graph = graph_13()
         count = largest_component.get_size(graph)
         self.assertEqual(count, 3)
+
+
+class ShortestPath(unittest.TestCase):
+
+    def test_00(self):
+        graph = graph_14()
+        count = shortest_path.get(graph, 'w', 'z')
+        self.assertEqual(count, 2)
+
+    def test_01(self):
+        graph = graph_14()
+        count = shortest_path.get(graph, 'y', 'x')
+        self.assertEqual(count, 1)
+
+    def test_02(self):
+        graph = graph_15()
+        count = shortest_path.get(graph, 'a', 'e')
+        self.assertEqual(count, 3)
+
+    def test_03(self):
+        graph = graph_15()
+        count = shortest_path.get(graph, 'e', 'c')
+        self.assertEqual(count, 2)
+
+    def test_04(self):
+        graph = graph_15()
+        count = shortest_path.get(graph, 'b', 'g')
+        self.assertEqual(count, -1)
+
+    def test_05(self):
+        graph = graph_16()
+        count = shortest_path.get(graph, 'w', 'e')
+        self.assertEqual(count, 1)
+
+    def test_06(self):
+        graph = graph_16()
+        count = shortest_path.get(graph, 'n', 'e')
+        self.assertEqual(count, 2)
+
+    def test_07(self):
+        graph = graph_17()
+        count = shortest_path.get(graph, 'm', 's')
+        self.assertEqual(count, 6)
 
 
 if __name__ == "__main__":
