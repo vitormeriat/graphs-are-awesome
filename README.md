@@ -5,6 +5,7 @@
 * Has Path
 * Undirected Path
 * Connected Components Count
+* Largest Component
 
 ---
 

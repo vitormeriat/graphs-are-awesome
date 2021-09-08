@@ -1,6 +1,6 @@
 
 import unittest
-from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components, graph
+from graph_algorithms import depth_first, breadth_first, undirected_path, connected_components, largest_component, graph
 
 
 def graph_00():
@@ -285,6 +285,7 @@ class TestDepthFist(unittest.TestCase):
 
 
 class TestBreadthFist(unittest.TestCase):
+
     def test_00(self):
         graph = graph_00()
         path = breadth_first.traversal(graph)
@@ -312,6 +313,7 @@ class TestBreadthFist(unittest.TestCase):
 
 
 class TestHasPath(unittest.TestCase):
+
     def test_00(self):
         graph = graph_06()
         has_path = depth_first.has_path(graph, 'f', 'k')
@@ -329,6 +331,7 @@ class TestHasPath(unittest.TestCase):
 
 
 class UndirectedPath(unittest.TestCase):
+
     def test_00(self):
         graph = graph_07()
         has_path = undirected_path.has_path(graph, 'j', 'm')
@@ -376,6 +379,7 @@ class UndirectedPath(unittest.TestCase):
 
 
 class ConnectedComponentsCount(unittest.TestCase):
+
     def test_00(self):
         graph = graph_09()
         count = connected_components.count(graph)
@@ -400,6 +404,34 @@ class ConnectedComponentsCount(unittest.TestCase):
         graph = graph_13()
         count = connected_components.count(graph)
         self.assertEqual(count, 5)
+
+
+class LargestComponent(unittest.TestCase):
+
+    def test_00(self):
+        graph = graph_09()
+        count = largest_component.get_size(graph)
+        self.assertEqual(count, 4)
+
+    def test_01(self):
+        graph = graph_10()
+        count = largest_component.get_size(graph)
+        self.assertEqual(count, 6)
+
+    def test_02(self):
+        graph = graph_11()
+        count = largest_component.get_size(graph)
+        self.assertEqual(count, 5)
+
+    def test_03(self):
+        graph = graph_12()
+        count = largest_component.get_size(graph)
+        self.assertEqual(count, 0)
+
+    def test_04(self):
+        graph = graph_13()
+        count = largest_component.get_size(graph)
+        self.assertEqual(count, 3)
 
 
 if __name__ == "__main__":
