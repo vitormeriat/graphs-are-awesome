@@ -45,3 +45,5 @@ since Python 3.3, and in 3.9 it will stop working
 -- Docs: https://docs.pytest.org/en/stable/warnings.html
 ==================== 53 passed, 1 warning in 0.52s ==========
 ```
+
+![](doc/tests.png)
