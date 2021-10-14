@@ -1,4 +1,7 @@
-
+""" A Python Class
+A simple Python graph class, demonstrating the essential 
+facts and functionalities of graphs.
+"""
 class Graph(object):
 
     def __init__(self, graph_dict=None):
@@ -64,8 +67,18 @@ class Graph(object):
         """ allows us to iterate over the vertices """
         return next(self._iter_obj)
 
+    def __str__(self):
+        res = "vertices: "
+        for k in self._graph_dict:
+            res += str(k) + " "
+        res += "\nedges: "
+        for edge in self.__generate_edges():
+            res += str(edge) + " "
+        return res
 
-graph = {"a": {"c"},
+
+
+graph_01 = {"a": {"c"},
          "b": {"c", "e"},
          "c": {"a", "b", "d", "e"},
          "d": {"c"},
@@ -73,6 +86,13 @@ graph = {"a": {"c"},
          "f": {}
          }
 
+graph_02 = { "a" : {"d"},
+      "b" : {"c"},
+      "c" : {"b", "c", "d", "e"},
+      "d" : {"a", "c"},
+      "e" : {"c"},
+      "f" : {}
+    }
 
 def generate_edges(graph):
     edges = []
@@ -83,4 +103,45 @@ def generate_edges(graph):
     return edges
 
 
-print(generate_edges(graph))
+print(generate_edges(graph_01))
+
+graph = Graph(graph_02)
+
+for vertice in graph:
+    print(f"Edges of vertice {vertice}: ", graph.edges(vertice))
+
+graph.add_edge({"ab", "fg"})
+graph.add_edge({"xyz", "bla"})
+
+
+# Let's calculate the list of all the vertices and the list of all the edges of our graph:
+
+print("")
+print("Vertices of graph:")
+print(graph.all_vertices())
+
+print("Edges of graph:")
+print(graph.all_edges())
+
+# We add a vertex and and edge to the graph:
+
+print("Add vertex:")
+graph.add_vertex("z")
+
+print("Add an edge:")
+graph.add_edge({"a", "d"})
+
+print("Vertices of graph:")
+print(graph.all_vertices())
+
+print("Edges of graph:")
+print(graph.all_edges())
+
+
+print('Adding an edge {"x","y"} with new vertices:')
+graph.add_edge({"x","y"})
+print("Vertices of graph:")
+print(graph.all_vertices())
+print("Edges of graph:")
+print(graph.all_edges())
+
