@@ -9,7 +9,7 @@ class Graph(object):
             If no dictionary or None is given, 
             an empty dictionary will be used
         """
-        if graph_dict == None:
+        if graph_dict is None:
             graph_dict = {}
         self._graph_dict = graph_dict
 
@@ -70,10 +70,10 @@ class Graph(object):
     def __str__(self):
         res = "vertices: "
         for k in self._graph_dict:
-            res += str(k) + " "
+            res += f"{str(k)} "
         res += "\nedges: "
         for edge in self.__generate_edges():
-            res += str(edge) + " "
+            res += f"{str(edge)} "
         return res
 
 
@@ -97,9 +97,7 @@ graph_02 = { "a" : {"d"},
 def generate_edges(graph):
     edges = []
     for node in graph:
-        for neighbour in graph[node]:
-            edges.append({node, neighbour})
-
+        edges.extend({node, neighbour} for neighbour in graph[node])
     return edges
 
 
