@@ -7,15 +7,15 @@ import math
 # Algoritmo Fleury
 def Fleury(g: Graph, explicado=False):
 
-    def vertice_inicial(g):
+    def vertice_inicial(g: Graph):
 
         l = g.vertices
 
-        if g.es_euleriano() == 1:
+        if g.is_eulerian() == 1:
             v = l[0]
             return v
-        elif g.es_euleriano() == 2:
-            v = [i[0] for i in g.grados() if i[1] % 2 != 0][0]
+        elif g.is_eulerian() == 2:
+            v = [i[0] for i in g.degrees() if i[1] % 2 != 0][0]
             return v
         else:
             return -1
@@ -38,12 +38,12 @@ def Fleury(g: Graph, explicado=False):
 
         while len(verts) > 1:
             # Miro cuantas aristas salen del vertice
-            a_incidentes = gg.aristas_incidentes(v_a)
+            a_incidentes = gg.incident_edges(v_a)
             # Si solo sale una arista, la cojo y cojo el otro extremo y los meto en V y E, y ya terminaría el while
             if len(a_incidentes) == 1:
                 E.append(a_incidentes[0])
                 # Borro tanto la arista como el vértice
-                gg.borrar_arista(a_incidentes[0][0], a_incidentes[0][1])
+                gg.delete_edge(a_incidentes[0][0], a_incidentes[0][1])
                 mensaje = f'Eliminamos la airsta ({str(a_incidentes[0][0])},{str(a_incidentes[0][1])})'
                 textos.append(mensaje)
                 verts.remove(v_a)
@@ -62,9 +62,9 @@ def Fleury(g: Graph, explicado=False):
                 parar = False
                 i = 0
                 while not parar and i <= len(a_incidentes):
-                    gg.borrar_arista(a_incidentes[i][0], a_incidentes[i][1])
+                    gg.delete_edge(a_incidentes[i][0], a_incidentes[i][1])
 
-                    if gg.conexo():
+                    if gg.related():
                         E.append(a_incidentes[i])
 
                         if a_incidentes[i][0] == v_a:
@@ -80,22 +80,22 @@ def Fleury(g: Graph, explicado=False):
                         Circuito.append(f'{s}de Euler: {EE}')
                         parar = True
                     else:
-                        gg.añadir_arista(
+                        gg.add_edge(
                             a_incidentes[i][0], a_incidentes[i][1])
                         i += 1
 
         fout = fout = tempfile.NamedTemporaryFile()
-        L = [g.dibujar('circo').render(f'{fout.name}0')]
+        L = [g.draw('circo').render(f'{fout.name}0')]
         textos.insert(0, 'Grafo inicial')
 
         for i in range(1, len(textos)):
             L.append(
-                g.resaltar_arista(E[:i], {}, 'lightgrey', '3', 'circo').render(
+                g.highlight_edge(E[:i], {}, 'lightgrey', '3', 'circo').render(
                     fout.name + str(i)
                 )
             )
 
-        g.pasoapaso(L, textos, Circuito)
+        g.step_by_step(L, textos, Circuito)
 
     else:
         gg = deepcopy(g)
@@ -103,17 +103,17 @@ def Fleury(g: Graph, explicado=False):
         v_inic = vertice_inicial(gg)
         V = [v_inic]
         verts = gg.vertices
-        aris = gg.aristas
+        aris = gg.edges
         v_a = v_inic
 
         while len(verts) > 1:
             # Miro cuantas aristas salen del vertice
-            a_incidentes = gg.aristas_incidentes(v_a)
+            a_incidentes = gg.incident_edges(v_a)
             # Si solo sale una arista, la cojo y cojo el otro extremo y los meto en V y E, y ya terminaría el while
             if len(a_incidentes) == 1:
                 E.append(a_incidentes[0])
                 # Borro tanto la arista como el vértice
-                gg.borrar_arista(a_incidentes[0][0], a_incidentes[0][1])
+                gg.delete_edge(a_incidentes[0][0], a_incidentes[0][1])
                 verts.remove(v_a)
 
                 if a_incidentes[0][0] == v_a:
@@ -127,9 +127,9 @@ def Fleury(g: Graph, explicado=False):
                 parar = False
                 i = 0
                 while not parar and i <= len(a_incidentes):
-                    gg.borrar_arista(a_incidentes[i][0], a_incidentes[i][1])
+                    gg.delete_edge(a_incidentes[i][0], a_incidentes[i][1])
 
-                    if gg.conexo():
+                    if gg.related():
                         E.append(a_incidentes[i])
 
                         if a_incidentes[i][0] == v_a:
@@ -142,7 +142,7 @@ def Fleury(g: Graph, explicado=False):
                         parar = True
 
                     else:
-                        gg.añadir_arista(
+                        gg.add_edge(
                             a_incidentes[i][0], a_incidentes[i][1])
                         i += 1
 

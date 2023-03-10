@@ -7,17 +7,17 @@ from sympy import *
 
 class Graph(object):
 
-    def __init__(self, verts=None, aris=None):
-        if verts is None:
-            verts = []
-        if aris is None:
-            aris = []
-        self.vertices = copy(verts)
-        if len(aris) == 0:
+    def __init__(self, vertex=None, edge=None):
+        if vertex is None:
+            vertex = []
+        if edge is None:
+            edge = []
+        self.vertices = copy(vertex)
+        if len(edge) == 0:
             self.edges = []
         else:
-            self.edges = copy(aris)
-            for i in aris:
+            self.edges = copy(edge)
+            for i in edge:
                 for j in i:
                     if j not in self.vertices:
                         self.vertices.append(j)

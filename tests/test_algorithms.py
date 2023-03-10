@@ -6,7 +6,7 @@ import algorithms as alg
 class TestDepthFist(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def test_00_iterative(self):
         graph = self.data.graph_00()
@@ -62,7 +62,7 @@ class TestDepthFist(unittest.TestCase):
 class TestBreadthFist(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def test_00(self):
         graph = self.data.graph_00()
@@ -93,7 +93,7 @@ class TestBreadthFist(unittest.TestCase):
 class TestHasPath(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def _depth_first_tests_graph_06(self, arg0, arg1, arg2):
         graph = self.data.graph_06()
@@ -113,7 +113,7 @@ class TestHasPath(unittest.TestCase):
 class UndirectedPath(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def _undirected_path_tests_graph_07(self, arg0, arg1, arg2):
         graph = self.data.graph_07()
@@ -156,7 +156,7 @@ class UndirectedPath(unittest.TestCase):
 class ConnectedComponentsCount(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def test_00(self):
         graph = self.data.graph_09()
@@ -187,7 +187,7 @@ class ConnectedComponentsCount(unittest.TestCase):
 class LargestComponent(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def test_00(self):
         graph = self.data.graph_09()
@@ -218,7 +218,7 @@ class LargestComponent(unittest.TestCase):
 class ShortestPath(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def test_00(self):
         graph = self.data.graph_14()
@@ -264,7 +264,7 @@ class ShortestPath(unittest.TestCase):
 class IslandCount(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def test_00(self):
         graph = self.data.graph_18()
@@ -290,7 +290,7 @@ class IslandCount(unittest.TestCase):
 class MinimumIsland(unittest.TestCase):
 
     def setUp(self):
-        self.data = alg.graph.GraphData()
+        self.data = alg.GraphData()
 
     def test_00(self):
         graph = self.data.graph_18()
