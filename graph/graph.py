@@ -5,7 +5,7 @@ import graphviz as gv
 from sympy import *
 
 
-class Grafo(object):
+class Graph(object):
 
     def __init__(self, verts=None, aris=None):
         if verts is None:
@@ -14,50 +14,46 @@ class Grafo(object):
             aris = []
         self.vertices = copy(verts)
         if len(aris) == 0:
-            self.aristas = []
+            self.edges = []
         else:
-            self.aristas = copy(aris)
+            self.edges = copy(aris)
             for i in aris:
                 for j in i:
                     if j not in self.vertices:
                         self.vertices.append(j)
-        self.dic_pesos = {}
+        self.dict_weights = {}
 
     def __repr__(self):
-        return str(
-            f"Grafo con {len(self.vertices)} vertices y {len(self.aristas)} lados"
-        )
+        return str(f"Graph with {len(self.vertices)} vertices and {len(self.edges)} edges")
 
     def __str__(self):
-        return str(
-            f"Grafo con vertices {str(self.vertices)} y lados {str(self.aristas)}"
-        )
+        return str(f"Graph with vertices {str(self.vertices)} and edges {str(self.edges)}")
 
-    def dibujar(self, motor='dot'):
-
-        g = self._extracted_from_resaltar_arista_3(motor)
-        for i in self.aristas:
+    # def dibujar(self, motor='dot'):
+    def draw(self, engine='dot'):
+        g = self._extracted_from_highlight_edge_3(engine)
+        for i in self.edges:
             g.edge(str(i[0]), str(i[1]))
 
-        for i in self.vertices_aislados():
+        for i in self.isolated_vertices():
             g.node(str(i))
 
         return g
 
-    def dibujar_ponderado(self, motor='dot'):
+    # def dibujar_ponderado(self, motor='dot'):
+    def draw_weighted(self, engine='dot'):
+        g = self._extracted_from_highlight_edge_3(engine)
+        for i in self.edges:
+            g.edge(str(i[0]), str(i[1]), str(self.dict_weights[i]))
 
-        g = self._extracted_from_resaltar_arista_3(motor)
-        for i in self.aristas:
-            g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
-
-        for i in self.vertices_aislados():
+        for i in self.isolated_vertices():
             g.node(str(i))
 
         return g
 
-    def resaltar_nodo(self, nodo, ncolor='red', motor='neato'):
-
-        g = gv.Graph(format='svg', engine=motor)
+    # def resaltar_nodo(self, nodo, ncolor='red', motor='neato'):
+    def highlight_node(self, nodo, ncolor='red', engine='neato'):
+        g = gv.Graph(format='svg', engine=engine)
         g.attr('node', shape='circle')
 
         if type(nodo) == list:
@@ -68,27 +64,29 @@ class Grafo(object):
 
         g.attr('node', style='filled')
 
-        if len(self.dic_pesos) == 0:
-            for i in self.aristas:
+        if len(self.dict_weights) == 0:
+            for i in self.edges:
                 g.edge(str(i[0]), str(i[1]))
         else:
-            for i in self.aristas:
-                g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+            for i in self.edges:
+                g.edge(str(i[0]), str(i[1]), str(self.dict_weights[i]))
 
-        for i in self.vertices_aislados():
+        for i in self.isolated_vertices():
             g.node(str(i))
 
         return g
 
-    # Me faltaría dar la lista de vertices y aristas ordenadas, cada vez que las toque
-    def añadir_vertice(self, v):
+    # Me faltaría dar la lista de vertices y edges ordenadas, cada vez que las toque
+    # def añadir_vertice(self, v):
+    def add_vertex(self, v):
         if int(v) in self.vertices:
             return False
         else:
             self.vertices.append(int(v))
 
-    def añadir_arista(self, u, v):
-        self.aristas.append((u, v))
+    # def añadir_arista(self, u, v):
+    def add_edge(self, u, v):
+        self.edges.append((u, v))
 
         # Quiero que, si añado una arista creando vértices que no están en mi grafo, se añadan
         if u not in self.vertices:
@@ -98,108 +96,116 @@ class Grafo(object):
             self.vertices.append(v)
 
     # Añado arista y añado a dic_pesos tambien
-    def añadir_arista_ponderada(self, u, v, peso):
-        self.añadir_arista(u, v)
-        self.dic_pesos[(u, v)] = peso
+    # def añadir_arista_ponderada(self, u, v, peso):
+    def add_weighted_edge(self, u, v, weigh):
+        self.add_edge(u, v)
+        self.dict_weights[(u, v)] = weigh
 
     # esta funcion me transforma mi grafo en poderado iniciando los pesos
-    def ponderado(self, pesos=None):
-        if pesos is None:
-            pesos = []
+    # def ponderado(self, pesos=None):
+    def weighted(self, weighs=None):
+        if weighs is None:
+            weighs = []
         # a la lista de pesos que me den como argumento o a 0 en su defecto.
-        if len(self.aristas) != len(pesos):
-            print('Longitudes de aristas y pesos distintas.')
+        if len(self.edges) != len(weighs):
+            print('Edge lengths and different weights.')
         else:
-            for i in self.aristas:
-                self.dic_pesos[i] = pesos[self.aristas.index(i)]
+            for i in self.edges:
+                self.dict_weights[i] = weighs[self.edges.index(i)]
         # ME FALTA SABER CÓMO GUARDAR LOS PESOS COMO UN VARIABLE, PARA PODER PONER
         # g.pesos  Y QUE ME LOS DEVUELVA
-        return self.dic_pesos
+        return self.dict_weights
 
-    def modificar_peso(self, arista, nuevo_peso):
-        if arista not in self.aristas:
-            print('La arista no esta en el grafo')
+    # def modificar_peso(self, arista, nuevo_peso):
+    def modify_weight(self, edge, nuevo_peso):
+        if edge not in self.edges:
+            print('The edge is not in the graph.')
         else:
-            self.dic_pesos[arista] = nuevo_peso
+            self.dict_weights[edge] = nuevo_peso
 
-    def borrar_vertice(self, v):
+    # def borrar_vertice(self, v):
+    def delete_vertex(self, v):
         if v not in self.vertices:
             return False
-        # Borro también todas las aristas adyacentes a v
+        # Borro también todas las edges adyacentes a v
         self.vertices.remove(v)
-        for i in self.aristas_incidentes(v):
-            self.aristas.remove(i)
-            if i in self.dic_pesos:
-                del (self.dic_pesos[i])
+        for i in self.incident_edges(v):
+            self.edges.remove(i)
+            if i in self.dict_weights:
+                del (self.dict_weights[i])
 
-    def borrar_arista(self, u, v):
-        if (u, v) in self.aristas:
-            self.aristas.remove((u, v))
-            if (u, v) in self.dic_pesos:
-                del (self.dic_pesos[(u, v)])
-        elif (v, u) in self.aristas:
-            self.aristas.remove((v, u))
-            if (v, u) in self.dic_pesos:
-                del (self.dic_pesos[(v, u)])
+    # def borrar_arista(self, u, v):
+    def delete_edge(self, u, v):
+        if (u, v) in self.edges:
+            self.edges.remove((u, v))
+            if (u, v) in self.dict_weights:
+                del (self.dict_weights[(u, v)])
+        elif (v, u) in self.edges:
+            self.edges.remove((v, u))
+            if (v, u) in self.dict_weights:
+                del (self.dict_weights[(v, u)])
         else:
             return False
 
-    def aristas_incidentes(self, v):
-        return [i for i in self.aristas if v in i]
+    # def edges_incidentes(self, v):
+    def incident_edges(self, v):
+        return [i for i in self.edges if v in i]
 
-    def identificar_vertices(self, a, b):
-
-        if self.grado(a) >= self.grado(b):
+    # def identificar_vertices(self, a, b):
+    def identify_vertices(self, a, b):
+        if self.degree(a) >= self.degree(b):
             v_eliminado = b
             v = a
         else:
             v_eliminado = a
             v = b
 
-        # reescribo las aristas
+        # reescribo las edges
         a_nuevas = []
-        for i in self.aristas_incidentes(v_eliminado):
+        for i in self.incident_edges(v_eliminado):
             if i[0] == v_eliminado:
                 a_nuevas.append((v, i[1]))
             else:
                 a_nuevas.append((i[0], v))
 
-        # elimino mi vértice 3 y añado las nuevas aristas siempre que no sean lazos
-        self.borrar_vertice(v_eliminado)
+        # elimino mi vértice 3 y añado las nuevas edges siempre que no sean lazos
+        self.delete_vertex(v_eliminado)
 
         for i in a_nuevas:
             if (
                 i[0] != i[1]
-                and i not in self.aristas
-                and (i[1], i[0]) not in self.aristas
+                and i not in self.edges
+                and (i[1], i[0]) not in self.edges
             ):
-                self.añadir_arista(i[0], i[1])
+                self.add_edge(i[0], i[1])
 
-    def vecinos(self, v):
-        l = self.aristas_incidentes(v)
-        lista_vecinos = []
+    # def vecinos(self, v):
+    def neighbors(self, v):
+        l = self.incident_edges(v)
+        list_neighbors = []
         for i in l:
             if i[0] == v:
-                lista_vecinos.append(i[1])
+                list_neighbors.append(i[1])
             else:
-                lista_vecinos.append(i[0])
+                list_neighbors.append(i[0])
 
-        return lista_vecinos
+        return list_neighbors
 
     # Devuelvo los vertices aislados, los que su grado es 0.
-    def vertices_aislados(self):
-        return [i for i in self.vertices if self.grado(i) == 0]
+    # def vertices_aislados(self):
+    def isolated_vertices(self):
+        return [i for i in self.vertices if self.degree(i) == 0]
 
-    def componentes_conexas(self):
-
+    # def componentes_conexas(self):
+    def related_components(self):
         self.comp_conexas = []
         c = []
         v = deepcopy(self.vertices)
-        a = deepcopy(self.aristas)
+        a = deepcopy(self.edges)
 
         # Primero quitamos vertices aislados
 
-        for i in self.vertices_aislados():
+        for i in self.isolated_vertices():
             self.comp_conexas.append([i])
             v.remove(i)
 
@@ -211,7 +217,7 @@ class Grafo(object):
 
             while not parar:
                 for i in c:
-                    if l := [k for k in self.aristas_incidentes(i) if k in a]:
+                    if l := [k for k in self.incident_edges(i) if k in a]:
                         for j in l:
                             if j[0] == i:
                                 if j[1] not in c:
@@ -229,18 +235,18 @@ class Grafo(object):
         return self.comp_conexas
 
     # Devuelvo true o false segun haya una o mas comp. conexas.
-    def conexo(self):
-
-        l = self.componentes_conexas()
+    # def conexo(self):
+    def related(self):
+        l = self.related_components()
         return len(l) == 1
 
     # Devuelvo un entero, el grado del vertice que se mete como argumento.
-    def grado(self, v):
-
+    # def grado(self, v):
+    def degree(self, v):
         if v not in self.vertices:
             return False
-        # numero de aristas incidentes, contando los lazos una sola vez, por lo que hay que
-        l = self.aristas_incidentes(v)
+        # numero de edges incidentes, contando los lazos una sola vez, por lo que hay que
+        l = self.incident_edges(v)
         # incrementar en 1 por cada lazo
         gr = len(l)
 
@@ -255,7 +261,7 @@ class Grafo(object):
     def lazos(self):
 
         l = self.vertices
-        a = deepcopy(self.aristas)
+        a = deepcopy(self.edges)
         lazos = []
 
         for i in l:
@@ -270,47 +276,50 @@ class Grafo(object):
         return lazos
 
     # Devuelvo una lista de 2-uplas, el vertice y su grado, ordenadas las uplas en el orden en que estan los
-    def grados(self):
-        return [(i, self.grado(i)) for i in self.vertices]
+    # def grados(self):
+    def degrees(self):
+        return [(i, self.degree(i)) for i in self.vertices]
 
     # digo si un grafo es euleriano o si tiene un camino de euler.
-    def es_euleriano(self):
+    # def es_euleriano(self):
+    def is_eulerian(self):
 
-        if self.conexo() == False:
+        if self.related() == False:
             return 0
 
-        l = [i[1] for i in self.grados() if i[1] % 2 == 0]
+        l = [i[1] for i in self.degrees() if i[1] % 2 == 0]
 
-        if len(l) == len(self.grados()):
+        if len(l) == len(self.degrees()):
             return 1
-        elif len(l) == len(self.grados())-2:
+        elif len(l) == len(self.degrees())-2:
             return 2
         else:
             return 0
 
-    def caminos_simples(self, v_inic, v_f):
-
-        def auxiliar(v_f, c_actual, v_usados, caminos):
+    # def caminos_simples(self, v_inic, v_f):
+    def simple_paths(self, v_inic, v_f):
+        def auxiliar(v_f, c_actual, v_usados, paths):
             v_actual = c_actual[-1]
             if v_actual == v_f:
-                caminos.append(list(c_actual))
+                paths.append(list(c_actual))
             else:
-                for i in self.vecinos(v_actual):
+                for i in self.neighbors(v_actual):
                     if i not in v_usados:
                         c_actual.append(i)
                         v_usados.append(i)
-                        auxiliar(v_f, c_actual, v_usados, caminos)
+                        auxiliar(v_f, c_actual, v_usados, paths)
                         v_usados.remove(i)
                         c_actual.pop()
-            return caminos
+            return paths
 
         return auxiliar(v_f, [v_inic], [v_inic], [])
 
-    def ciclos(self, longitud=-1):
+    # def ciclos(self, longitud=-1):
+    def cycles(self, longitud=-1):
         L = []
         for i in self.vertices:
-            for j in self.vecinos(i):
-                l = self.caminos_simples(j, i)
+            for j in self.neighbors(i):
+                l = self.simple_paths(j, i)
                 for k in l:
                     k.insert(0, i)
                     L.append(k)
@@ -318,15 +327,17 @@ class Grafo(object):
         return [i for i in L if len(i) > longitud] if longitud != -1 else L
 
     # Ver que el tamaño es n-1 siendo n el orden
-    def es_arbol(self):
+    # def es_arbol(self):
+    def is_tree(self):
+        return bool(self.related() and len(self.edges) == len(self.vertices)-1)
 
-        return bool(self.conexo() and len(self.aristas) == len(self.vertices)-1)
+    # def es_completo(self):
+    def is_complete(self):
+        degrees = [i[1] for i in self.degrees()]
+        return len(set(degrees)) == 1
 
-    def es_completo(self):
-        grados = [i[1] for i in self.grados()]
-        return len(set(grados)) == 1
-
-    def pasoapaso(self, lg, lt, cd=''):
+    # def pasoapaso(self, lg, lt, cd=''):
+    def step_by_step(self, lg, lt, cd=''):
 
         def plot(d=0):
             cod = ['' for i in range(len(lg))] if cd == '' else cd
@@ -351,48 +362,48 @@ class Grafo(object):
         P = []
         g = deepcopy(self)
 
-        if g.es_arbol() == False:
-            raise ValueError('El grafo no es un árbol.')
+        if g.is_tree() == False:
+            raise ValueError('The graph is not a tree.')
 
         while len(g.vertices) > 2:
 
             # Busco el nodo de menor etiqueta con grado 1
 
-            n = [i for i in g.vertices if g.grado(i) == 1]
+            n = [i for i in g.vertices if g.degree(i) == 1]
             n.sort()
-            borrar_nodo = n[0]
+            delete_node = n[0]
 
             # Veo cual es su arista incidente y cojo el otro extremo
 
-            borrar_arista = g.aristas_incidentes(borrar_nodo)[0]
+            delete_edge = g.incident_edges(delete_node)[0]
 
-            añadir_nodo = (
-                borrar_arista[1]
-                if borrar_arista[0] == borrar_nodo
-                else borrar_arista[0]
+            add_node = (
+                delete_edge[1]
+                if delete_edge[0] == delete_node
+                else delete_edge[0]
             )
             # Ahora añado ese nodo al codigo Prufer P y borro el vertice del grafo
 
-            P.append(añadir_nodo)
+            P.append(add_node)
 
-            g.borrar_vertice(borrar_nodo)
+            g.delete_vertex(delete_node)
 
         return P
 
-    def resaltar_arista(self, aristas, pesos_nuevos=None, acolor='red', anchura='3', motor='neato'):
+    # def resaltar_arista(self, edges, pesos_nuevos=None, acolor='red', anchura='3', motor='neato'):
+    def highlight_edge(self, edges, list_neighbors=None, color='red', width='3', engine='neato'):
 
-        if pesos_nuevos is None:
-            pesos_nuevos = {}
-        arist = deepcopy(self.aristas)
-        p = pesos_nuevos
-        arista = deepcopy(aristas)
+        if list_neighbors is None:
+            list_neighbors = {}
+        arist = deepcopy(self.edges)
+        p = list_neighbors
+        edge = deepcopy(edges)
 
-        g = self._extracted_from_resaltar_arista_3(motor)
-        if type(arista) == list:
-            l2 = []
-            pl2 = []
-            l1 = []
-            for i in arista:
+        g = self._extracted_from_highlight_edge_3(engine)
+        if type(edge) == list:
+            l2, pl2, l1 = ([], [], [])
+
+            for i in edge:
                 if i in arist or (i[1], i[0]) in arist:
                     l1.append(i)
                 else:
@@ -403,29 +414,29 @@ class Grafo(object):
 
             l3 = [i for i in arist if i not in l1 and (i[1], i[0]) not in l1]
 
-            if len(self.dic_pesos) == 0:
+            if len(self.dict_weights) == 0:
                 for i in l3:
                     g.edge(str(i[0]), str(i[1]))
             else:
                 for i in l3:
-                    if i in self.dic_pesos:
-                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+                    if i in self.dict_weights:
+                        g.edge(str(i[0]), str(i[1]), str(self.dict_weights[i]))
                     else:
                         g.edge(str(i[0]), str(i[1]), str(
-                            self.dic_pesos[(i[1], i[0])]))
+                            self.dict_weights[(i[1], i[0])]))
 
-            g.attr('edge', color=acolor, penwidth=anchura)
+            g.attr('edge', color=color, penwidth=width)
 
-            if len(self.dic_pesos) == 0:
+            if len(self.dict_weights) == 0:
                 for i in l1:
                     g.edge(str(i[0]), str(i[1]))
             else:
                 for i in l1:
-                    if i in self.dic_pesos:
-                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+                    if i in self.dict_weights:
+                        g.edge(str(i[0]), str(i[1]), str(self.dict_weights[i]))
                     else:
                         g.edge(str(i[0]), str(i[1]), str(
-                            self.dic_pesos[(i[1], i[0])]))
+                            self.dict_weights[(i[1], i[0])]))
 
             if len(p) == 0:
                 for i in l2:
@@ -434,70 +445,72 @@ class Grafo(object):
                 for i in l2:
                     g.edge(str(i[0]), str(i[1]), str(p[i]))
 
-            for i in self.vertices_aislados():
+            for i in self.isolated_vertices():
                 g.node(str(i))
 
-        elif arista in arist:
-            arist.remove(arista)
+        elif edge in arist:
+            arist.remove(edge)
 
-            self._extracted_from_resaltar_arista_63(arist, g, acolor, anchura)
-            if len(self.dic_pesos) == 0:
-                g.edge(str(arista[0]), str(arista[1]))
+            self._extracted_from_highlight_edge_63(arist, g, color, width)
+            if len(self.dict_weights) == 0:
+                g.edge(str(edge[0]), str(edge[1]))
             else:
-                g.edge(str(arista[0]), str(arista[1]),
-                       str(self.dic_pesos[arista]))
+                g.edge(str(edge[0]), str(edge[1]),
+                       str(self.dict_weights[edge]))
 
-        elif (arista[1], arista[0]) in arist:
-            arist.remove((arista[1], arista[0]))
+        elif (edge[1], edge[0]) in arist:
+            arist.remove((edge[1], edge[0]))
 
-            self._extracted_from_resaltar_arista_63(arist, g, acolor, anchura)
-            if len(self.dic_pesos) == 0:
-                g.edge(str(arista[0]), str(arista[1]))
+            self._extracted_from_highlight_edge_63(arist, g, color, width)
+            if len(self.dict_weights) == 0:
+                g.edge(str(edge[0]), str(edge[1]))
             else:
-                g.edge(str(arista[0]), str(arista[1]), str(
-                    self.dic_pesos[(arista[1], arista[0])]))
+                g.edge(str(edge[0]), str(edge[1]), str(
+                    self.dict_weights[(edge[1], edge[0])]))
 
         else:
-            self._extracted_from_resaltar_arista_63(arist, g, acolor, anchura)
+            self._extracted_from_highlight_edge_63(arist, g, color, width)
             if len(p) == 0:
-                g.edge(str(arista[0]), str(arista[1]))
+                g.edge(str(edge[0]), str(edge[1]))
             else:
-                g.edge(str(arista[0]), str(arista[1]), str(p[arista]))
+                g.edge(str(edge[0]), str(edge[1]), str(p[edge]))
 
         return g
 
-    # TODO Rename this here and in `dibujar`, `dibujar_ponderado` and `resaltar_arista`
-    def _extracted_from_resaltar_arista_3(self, motor):
-        result = gv.Graph(format='svg', engine=motor)
+    # TODO Rename this here and in `dibujar`, `dibujar_ponderado` and `highlight_edge`
+    # def _extracted_from_resaltar_arista_3(self, motor):
+    def _extracted_from_highlight_edge_3(self, engine):
+        result = gv.Graph(format='svg', engine=engine)
         result.attr('node', shape='circle')
         result.attr('node', style='filled')
         return result
 
-    # TODO Rename this here and in `resaltar_arista`
-    def _extracted_from_resaltar_arista_63(self, arist, g, acolor, anchura):
-        if len(self.dic_pesos) == 0:
-            for i in arist:
+    # TODO Rename this here and in `highlight_edge`
+    # def _extracted_from_resaltar_arista_63(self, arist, g, acolor, anchura):
+    def _extracted_from_highlight_edge_63(self, edge, g, color, width):
+        if len(self.dict_weights) == 0:
+            for i in edge:
                 g.edge(str(i[0]), str(i[1]))
         else:
-            for i in arist:
-                g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+            for i in edge:
+                g.edge(str(i[0]), str(i[1]), str(self.dict_weights[i]))
 
-        for i in self.vertices_aislados():
+        for i in self.isolated_vertices():
             g.node(str(i))
 
-        g.attr('edge', color=acolor, penwidth=anchura)
+        g.attr('edge', color=color, penwidth=width)
 
-    def polinomio_cromatico(self, x):
-
+    # def polinomio_cromatico(self, x):
+    def chromatic_polynomial(self, x):
         G = deepcopy(self)
 
-        lados = G.aristas
+        lados = G.edges
         if len(lados) == 0:
             return x**len(G.vertices)
         l = lados[0]
         Gl = deepcopy(G)
-        Gl.borrar_arista(l[0], l[1])
+        Gl.delete_edge(l[0], l[1])
         Glp = deepcopy(G)
-        Glp.identificar_vertices(l[0], l[1])
+        Glp.identify_vertices(l[0], l[1])
 
-        return Gl.polinomio_cromatico(x) - Glp.polinomio_cromatico(x)
+        return Gl.chromatic_polynomial(x) - Glp.chromatic_polynomial(x)

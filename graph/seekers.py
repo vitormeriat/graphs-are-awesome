@@ -1,12 +1,11 @@
-from graph.graph import Grafo
+from graph.graph import Graph
 from copy import deepcopy
 import tempfile
 import math
 
 
-
 # Algoritmo Fleury
-def Fleury(g, explicado=False):
+def Fleury(g: Graph, explicado=False):
 
     def vertice_inicial(g):
 
@@ -31,10 +30,10 @@ def Fleury(g, explicado=False):
         v_inic = vertice_inicial(gg)
         V = [v_inic]
         verts = gg.vertices
-        aris = gg.aristas
+        aris = gg.vertices
         v_a = v_inic
 
-        s = 'Circuito ' if g.es_euleriano() == 1 else 'Camino '
+        s = 'Circuito ' if g.is_eulerian() == 1 else 'Camino '
         Circuito = [f'{s} de Euler: []']
 
         while len(verts) > 1:
