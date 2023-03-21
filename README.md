@@ -12,6 +12,8 @@
 
 ---
 
+The purpose of this repository is to provide implementations of basic graph algorithms in Python. These algorithms include Breadth First, Depth First, Has Path, Undirected Path, Connected Components Count, Largest Component, Shortest Path, Island Count, and Minimum Island. The repository contains unit tests to ensure the correctness of the implementations.
+
 Graph theory goes back to the XVIII century, when Euler introduced its basic ideas to solve the famous problem of the Kronigsberg’s bridges. However, in the last few decades, graph theory has been established, by its own right, as an important mathematical tool in a wide variety of areas of knowledge, such as operational research, engineering, genetics, sociology, geography, ecology, numerical analysis, parallel computation, telecommunications and chemistry. Besides, it is usual to say that a considerable number of problems in a wide variety of sciences can be modeled by a graph and solved using graph theory. For example, it is possible to calculate the different combinations of flights between two cities, to determinate if it is possible or not to walk in every street of a city without walking in a street twice and to know the number of colours we need to colour a map.
 
 ---
