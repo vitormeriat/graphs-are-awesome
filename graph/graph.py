@@ -24,9 +24,11 @@ class Graph(object):
         self.dict_weights = {}
 
     def __repr__(self):
+        """Return the representation of the Graph."""
         return str(f"Graph with {len(self.vertices)} vertices and {len(self.edges)} edges")
 
     def __str__(self):
+        """Return the string representation of the Graph."""
         return str(f"Graph with vertices {str(self.vertices)} and edges {str(self.edges)}")
 
     # def dibujar(self, motor='dot'):
