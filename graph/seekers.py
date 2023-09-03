@@ -700,7 +700,7 @@ def Kauffman_Malgrange(g, explicado=False):
 def Prufer_a_Arbol(P1, explicado=False):
 
     P = deepcopy(P1)
-    g = Grafo()
+    g = Graph()
 
     if explicado:
 
@@ -856,7 +856,7 @@ def Destructivo(g, explicado=False):
 def Constructivo(gg, explicado=False):
 
     aristas = deepcopy(gg.aristas)
-    g = Grafo()
+    g = Graph()
 
     if explicado == True:
 
@@ -913,7 +913,7 @@ def Kruskal_Constructivo(gg, explicado=False):
 
     aristas = deepcopy(gg.aristas)
     pesos = [gg.dic_pesos[i] for i in aristas]
-    g = Grafo()
+    g = Graph()
     pesos_nuevos = []
 
     if explicado == True:
@@ -1205,7 +1205,7 @@ def Boruvka(g, explicado=False):
     pesosord.sort()
     aristas_G = deepcopy(g.aristas)
     vertices_G = deepcopy(g.vertices)
-    T = Grafo()
+    T = Graph()
     pes = []
 
     if explicado == True:

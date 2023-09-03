@@ -2,6 +2,8 @@
 A simple Python graph class, demonstrating the essential 
 facts and functionalities of graphs.
 """
+
+
 class Graph(object):
 
     def __init__(self, graph_dict=None):
@@ -77,22 +79,22 @@ class Graph(object):
         return res
 
 
-
 graph_01 = {"a": {"c"},
-         "b": {"c", "e"},
-         "c": {"a", "b", "d", "e"},
-         "d": {"c"},
-         "e": {"c", "b"},
-         "f": {}
-         }
+            "b": {"c", "e"},
+            "c": {"a", "b", "d", "e"},
+            "d": {"c"},
+            "e": {"c", "b"},
+            "f": {}
+            }
 
-graph_02 = { "a" : {"d"},
-      "b" : {"c"},
-      "c" : {"b", "c", "d", "e"},
-      "d" : {"a", "c"},
-      "e" : {"c"},
-      "f" : {}
-    }
+graph_02 = {"a": {"d"},
+            "b": {"c"},
+            "c": {"b", "c", "d", "e"},
+            "d": {"a", "c"},
+            "e": {"c"},
+            "f": {}
+            }
+
 
 def generate_edges(graph):
     edges = []
@@ -137,9 +139,8 @@ print(graph.all_edges())
 
 
 print('Adding an edge {"x","y"} with new vertices:')
-graph.add_edge({"x","y"})
+graph.add_edge({"x", "y"})
 print("Vertices of graph:")
 print(graph.all_vertices())
 print("Edges of graph:")
 print(graph.all_edges())
-

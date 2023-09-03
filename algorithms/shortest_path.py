@@ -18,7 +18,7 @@ from collections import deque
 
 def get(edges, node_A, node_B):
     graph = build_graph(edges)
-    visited = set([node_A])
+    visited = {node_A}
     queue = deque([(node_A, 0)])
 
     while queue:

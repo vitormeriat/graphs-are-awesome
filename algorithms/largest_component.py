@@ -27,11 +27,8 @@ def get_size(graph):
 def explore_size(graph, node, visited):
   if node in visited:
     return 0
-  
+
   visited.add(node)
-  
-  size = 1
-  for neighbor in graph[node]:
-    size += explore_size(graph, neighbor, visited)
-    
-  return size
+
+  return 1 + sum(
+      explore_size(graph, neighbor, visited) for neighbor in graph[node])

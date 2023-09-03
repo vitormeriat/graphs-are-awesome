@@ -18,7 +18,7 @@ def plot_graph_simple(G: nx.classes.graph.Graph, node_size=1000):
     plt.show()
 
 
-def plot_graph(G: nx.classes.graph.Graph, values: list, labels: dict, name:str, node_size=1000):
+def plot_graph(G: nx.classes.graph.Graph, values: list, labels: dict, name: str, node_size=1000):
     opts = {
         "font_size": 16, "node_size": node_size, "font_color": "whitesmoke",
         "width": 1.5, "node_color": values, "labels": labels, "with_labels": True,
@@ -34,10 +34,10 @@ def plot_graph(G: nx.classes.graph.Graph, values: list, labels: dict, name:str, 
 
 
 class Stats():
-    
+
     def __init__(self):
         self.round_len = 5
-    
+
     def log_time(self, msg, start_time):
         end = time()
         elapsed = end - start_time
@@ -93,7 +93,7 @@ class Stats():
         # Run betweenness centrality
         start_time = time()
         k = int(float(G.number_of_nodes()) / 100 * float(10))
-        #betweenness_dict = nx.betweenness_centrality(self.G)
+        # betweenness_dict = nx.betweenness_centrality(self.G)
         betweenness_dict = nx.betweenness_centrality(G, k=k)
         self.log_time('Betweenness centrality', start_time)
         return betweenness_dict
@@ -125,7 +125,7 @@ class Stats():
         clustering_dict = nx.clustering(G)
         self.log_time('Clustering coefficient', start_time)
         return clustering_dict
-    
+
     def run_stats(self, betweenness, closeness, degree, eigenvector, clustering, _is):
         return [
             {
@@ -145,7 +145,7 @@ def network_statistics(G: nx.classes.graph.Graph):
 
     print('Métricas iniciais da rede...')
     print(f'\n{str(G)}')
-    #print(f'\n{nx.info(G)}')
+    # print(f'\n{nx.info(G)}')
     print("\n%40s    %s" % ('Process', 'Time'))
     print("%40s    %s" % ('='*40, '='*25))
 
@@ -174,7 +174,7 @@ def network_statistics(G: nx.classes.graph.Graph):
         'density': density,
         'diameter': diameter,
         'radius': radius,
-        'average_shortest_path':average_shortest_path,
+        'average_shortest_path': average_shortest_path,
         'average_degree': average_degree,
         'is_connected': is_connected,
         'number_connected_components': number_connected_components,

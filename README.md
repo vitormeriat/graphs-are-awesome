@@ -48,4 +48,4 @@ since Python 3.3, and in 3.9 it will stop working
 ==================== 53 passed, 1 warning in 0.52s ==========
 ```
 
-![](doc/tests.png)
+![](docs/assets/tests.png)
