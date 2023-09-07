@@ -1,1 +1,29 @@
-site_name: My Docs
+site_name: Graphs are Awesome
+repo_url: https://github.com/vitormeriat/graphs-are-awesome
+repo_name: vitormeriat/graphs-are-awesome
+edit_uri: tree/main/docs
+
+theme:
+  name: material
+  logo: assets/logo.png
+  favicon: assets/logo.png
+
+markdown_extensions:
+  - attr_list
+
+extra_css:
+  - stylesheets/extra.css
+
+#watch:
+#   - text_graph
+
+plugins:
+  - macros
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [text_graph]
+
+extra:
+  commands:
+    run: tgraph

@@ -29,3 +29,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.taskipy.tasks]
 test = "pytest -s -x --cov=graph -vv"
+docs = "mkdocs serve"
