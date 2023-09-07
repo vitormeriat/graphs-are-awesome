@@ -4,15 +4,6 @@
 </h1>
 </div>
 
-Graph theory goes back to the XVIII century, when Euler introduced its basic ideas to solve the famous problem of the Kronigsberg’s bridges. However, in the last few decades, graph theory has been established, by its own right, as an important mathematical tool in a wide variety of areas of knowledge, such as operational research, engineering, genetics, sociology, geography, ecology, numerical analysis, parallel computation, telecommunications and chemistry. Besides, it is usual to say that a considerable number of problems in a wide variety of sciences can be modeled by a graph and solved using graph theory. For example, it is possible to calculate the different combinations of flights between two cities, to determinate if it is possible or not to walk in every street of a city without walking in a street twice and to know the number of colours we need to colour a map.
-
----
-
-<h2 style="margin-top:40px"><a href="../algorithms/README.md">Blog Content</a></h2>
-
-1. Graph Theory Intro
-2. Graph Neural Networks
-
 ---
 
 <h2 style="margin-top:40px"><a href="../algorithms/README.md">Basic Graph Algorithms</a></h2>

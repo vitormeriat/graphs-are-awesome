@@ -188,10 +188,9 @@ def Hierholzer(gg, explicado=False):
             # Recorro los ciclos de g, si encuentro uno de los vértices impares, miro a ver si el siguiente también lo
             for i in ciclos:
                 # es. En ese caso, me quedo con ese ciclo como el principal, sobre el que incluiré los demás.
-                if i[0] == l[0] or i[0] == l[1]:
-                    if i[1] == l[0] or i[1] == l[1]:
-                        C.append(i)
-                        parar = True
+                if (i[0] == l[0] or i[0] == l[1]) and (i[1] == l[0] or i[1] == l[1]):
+                    C.append(i)
+                    parar = True
                 if parar == True:
                     break
 
@@ -368,11 +367,9 @@ def Hierholzer(gg, explicado=False):
             # Recorro los ciclos de g, si encuentro uno de los vértices impares, miro a ver si el siguiente también lo
             for i in ciclos:
                 # es. En ese caso, me quedo con ese ciclo como el principal, sobre el que incluiré los demás.
-                if i[0] == l[0] or i[0] == l[1]:
-                    if i[1] == l[0] or i[1] == l[1]:
-                        C.append(i)
-                        parar = True
-                if parar == True:
+                if (i[0] == l[0] or i[0] == l[1]) and (i[1] == l[0] or i[1] == l[1]):
+                    C.append(i)
+                    parar = True
                     break
 
             # Borro ahora las aristas que intervienen en mi ciclo principal
@@ -565,10 +562,8 @@ def Kauffman_Malgrange(g, explicado=False):
 
         for i in range(len(M)):
             for j in range(len(M[i])):
-                if type(M[i][j]) == list:
-                    if set(M[i][j]) == {math.inf}:
-                        M[i][j] = math.inf
-        return M
+                if type(M[i][j]) == list and set(M[i][j]) == {math.inf}:
+                    M[i][j] = math.inf
 
 # -----------------------------------------------------------------------------------------------------------
 
@@ -867,7 +862,7 @@ def Constructivo(gg, explicado=False):
         contador = contador+1
         textos = ['Grafo inicial']
         E = []
-        g1 = Grafo()
+        g1 = Graph()
 
         while len(g.aristas) < len(gg.vertices)-1:
 
@@ -1069,7 +1064,7 @@ def Prim(g, explicado=False):
         # v_a va siendo el vértice siguiente de la arista escogida y voy borrando las aristas seleccionadas, preguntando antes si forman
         # ciclos.
 
-        gg = Grafo()
+        gg = Graph()
         V = []
         A = []
 
@@ -1150,7 +1145,7 @@ def Prim(g, explicado=False):
         # v_a va siendo el vértice siguiente de la arista escogida y voy borrando las aristas seleccionadas, preguntando antes si forman
         # ciclos.
 
-        gg = Grafo()
+        gg = Graph()
         V = []
         A = []
 
@@ -2091,7 +2086,7 @@ def Secuencia_a_Grafo(lista, explicado=False):
 
     listas = Secuencia_Grafica(lista)
 
-    gout = Grafo()
+    gout = Graph()
 
     if listas != 0:
 
