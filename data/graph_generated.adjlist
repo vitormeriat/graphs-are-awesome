@@ -1,0 +1,13 @@
+#/home/vitormeriat/repos/graphs-are-awesome/.venv/lib/python3.10/site-packages/ipykernel_launcher.py --f=/home/vitormeriat/.local/share/jupyter/runtime/kernel-v2-9978E8f91Hpfx2BB.json
+# GMT Sun Nov 19 00:51:25 2023
+# Petersen Graph
+0 1 4 5
+1 2 6
+2 3 7
+3 4 8
+4 9
+5 7 8
+6 8 9
+7 9
+8
+9
